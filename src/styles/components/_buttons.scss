@@ -13,12 +13,12 @@
   &--primary {
     background: $primary-color;
     color: white;
-    &:hover { background: color.adjust($primary-color, $lightness: -10%); }
+    &:hover { background: darken($primary-color, 10%); }
   }
 
   &--secondary {
     background: $secondary-color;
     color: white;
-    &:hover { background: color.adjust($secondary-color, $lightness: -10%); }
+    &:hover { background: darken($secondary-color, 10%); }
   }
 }
