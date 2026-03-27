@@ -8,13 +8,22 @@ const __dirname = path.dirname(__filename)
 const pageName = process.argv[2]
 
 if (!pageName) {
-  console.error('❌ Укажите имя страницы: npm run create:page <name>')
+  console.error('Укажите имя страницы: npm run create:page <name>')
   process.exit(1)
 }
 
 const srcDir = path.resolve(__dirname, '../src')
 const pagesDir = path.resolve(srcDir, 'pages')
 const stylesPagesDir = path.resolve(srcDir, 'styles/pages')
+
+// Создаем директории, если их нет
+if (!fs.existsSync(pagesDir)) {
+  fs.mkdirSync(pagesDir, { recursive: true })
+}
+
+if (!fs.existsSync(stylesPagesDir)) {
+  fs.mkdirSync(stylesPagesDir, { recursive: true })
+}
 
 // 1. Создаем HTML
 const htmlContent = `<!DOCTYPE html>
@@ -46,7 +55,7 @@ let configContent = fs.readFileSync(configPath, 'utf-8')
 
 // Проверяем, есть ли уже такая страница
 if (configContent.includes(`${pageName}:`)) {
-  console.log(`⚠️ Страница "${pageName}" уже существует в конфиге`)
+  console.log(`Страница "${pageName}" уже существует в конфиге`)
 } else {
   // Добавляем новую точку входа
   const newEntry = `    ${pageName}: resolve(__dirname, 'src/pages/${pageName}.html'),`
@@ -58,11 +67,11 @@ if (configContent.includes(`${pageName}:`)) {
   )
   
   fs.writeFileSync(configPath, configContent)
-  console.log(`✅ vite.config.js обновлен`)
+  console.log(`vite.config.js обновлен`)
 }
 
-console.log(`✅ Страница "${pageName}" создана успешно!`)
-console.log(`📁 Файлы:`)
+console.log(`Страница "${pageName}" создана успешно!`)
+console.log(`Файлы:`)
 console.log(`   - src/pages/${pageName}.html`)
 console.log(`   - src/${pageName}.js`)
 console.log(`   - src/styles/pages/${pageName}.scss`)

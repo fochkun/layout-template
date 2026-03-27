@@ -15,6 +15,11 @@ if (!componentName) {
 const componentsDir = path.resolve(__dirname, '../src/styles/components')
 const mainScssPath = path.resolve(__dirname, '../src/styles/main.scss')
 
+// Создаем директорию компонентов, если её нет
+if (!fs.existsSync(componentsDir)) {
+  fs.mkdirSync(componentsDir, { recursive: true })
+}
+
 // 1. Создаем SCSS файл компонента
 const scssContent = `@import '../abstracts/variables';
 @import '../abstracts/mixins';
